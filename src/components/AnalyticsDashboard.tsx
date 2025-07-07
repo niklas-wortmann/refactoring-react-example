@@ -47,7 +47,7 @@ const AnalyticsDashboard = () => {
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        return months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+        return `${months[date.getMonth()]}/${date.getDate()}/${date.getFullYear()}`;
     };
 
     const calculateGrowth = (current: number, previous: number) => {
