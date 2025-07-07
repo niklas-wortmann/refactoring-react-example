@@ -69,7 +69,9 @@ const AnalyticsDashboard = () => {
                 marginBottom: '30px'
             }}>
                 <MetricCard label={formatNumber(analyticsData.totalUsers)}
-                            delta={calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers)}/>
+                            delta={calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers)}
+                            icon={calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers) >= 0 ? "↗" : "↘"}
+                />
 
                 <MetricCard label={formatNumber(analyticsData.revenue)}
                             delta={calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue)}/>
