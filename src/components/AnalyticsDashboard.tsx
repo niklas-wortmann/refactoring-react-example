@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {MetricCard} from "./MetricCard.tsx";
+import {ErrorBoundary} from "react-error-boundary";
 
 type RecentActivity = { user: string, action: string, timestamp: string };
 
@@ -62,26 +63,28 @@ const AnalyticsDashboard = () => {
         <div style={{padding: '20px', fontFamily: 'Arial, sans-serif'}}>
             <h1>Analytics Dashboard</h1>
 
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: '20px',
-                marginBottom: '30px'
-            }}>
-                <MetricCard label={formatNumber(analyticsData.totalUsers)}
-                            delta={calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers)}
-                            icon={calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers) >= 0 ? "↗" : "↘"}
-                />
+            <ErrorBoundary fallback={<div>Something went wrong with the metrics</div>}>
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                    gap: '20px',
+                    marginBottom: '30px'
+                }}>
+                    <MetricCard label={formatNumber(analyticsData.totalUsers)}
+                                delta={calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers)}
+                                icon={calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers) >= 0 ? "↗" : "↘"}
+                    />
 
-                <MetricCard label={formatNumber(analyticsData.revenue)}
-                            delta={calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue)}/>
+                    <MetricCard label={formatNumber(analyticsData.revenue)}
+                                delta={calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue)}/>
 
-                <MetricCard label={formatNumber(analyticsData.pageViews)}
-                            delta={calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews)}/>
+                    <MetricCard label={formatNumber(analyticsData.pageViews)}
+                                delta={calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews)}/>
 
-                <MetricCard label={formatNumber(analyticsData.conversionRate)}
-                            delta={calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate)}/>
-            </div>
+                    <MetricCard label={formatNumber(analyticsData.conversionRate)}
+                                delta={calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate)}/>
+                </div>
+            </ErrorBoundary>
 
 
             <div style={{marginTop: '40px'}}>
