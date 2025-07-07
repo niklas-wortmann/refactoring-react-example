@@ -68,17 +68,17 @@ const AnalyticsDashboard = () => {
                 gap: '20px',
                 marginBottom: '30px'
             }}>
-                <MetricCard s={formatNumber(analyticsData.totalUsers)}
-                            number={calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers)}/>
+                <MetricCard label={formatNumber(analyticsData.totalUsers)}
+                            delta={calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers)}/>
 
-                <MetricCard s={formatNumber(analyticsData.revenue)}
-                            number={calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue)}/>
+                <MetricCard label={formatNumber(analyticsData.revenue)}
+                            delta={calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue)}/>
 
-                <MetricCard s={formatNumber(analyticsData.pageViews)}
-                            number={calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews)}/>
+                <MetricCard label={formatNumber(analyticsData.pageViews)}
+                            delta={calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews)}/>
 
-                <MetricCard s={formatNumber(analyticsData.conversionRate)}
-                            number={calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate)}/>
+                <MetricCard label={formatNumber(analyticsData.conversionRate)}
+                            delta={calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate)}/>
 
 
             <div style={{marginTop: '40px'}}>
