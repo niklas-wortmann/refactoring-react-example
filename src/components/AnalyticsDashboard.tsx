@@ -1,4 +1,5 @@
-import { useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
+import {MetricCard} from "./MetricCard.tsx";
 
 type RecentActivity = { user: string, action: string, timestamp: string };
 
@@ -13,6 +14,7 @@ type AnalyticsData = {
     "previousConversionRate": number,
     "recentActivity": RecentActivity[]
 };
+
 const AnalyticsDashboard = () => {
 
     const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
@@ -66,54 +68,18 @@ const AnalyticsDashboard = () => {
                 gap: '20px',
                 marginBottom: '30px'
             }}>
-                <div style={{border: '1px solid #ddd', padding: '20px', borderRadius: '8px'}}>
-                    <h3>Total Users</h3>
-                    <div style={{fontSize: '32px', fontWeight: 'bold', color: '#2196F3'}}>
-                        {formatNumber(analyticsData.totalUsers)}
-                    </div>
-                    <div
-                        style={{color: calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers) >= 0 ? 'green' : 'red'}}>
-                        {calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers) >= 0 ? '↗' : '↘'}
-                        {Math.abs(calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers)).toFixed(1)}% vs last month
-                    </div>
-                </div>
+                <MetricCard s={formatNumber(analyticsData.totalUsers)}
+                            number={calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers)}/>
 
-                <div style={{border: '1px solid #ddd', padding: '20px', borderRadius: '8px'}}>
-                    <h3>Revenue</h3>
-                    <div style={{fontSize: '32px', fontWeight: 'bold', color: '#4CAF50'}}>
-                        ${formatNumber(analyticsData.revenue)}
-                    </div>
-                    <div style={{color: calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue) >= 0 ? 'green' : 'red'}}>
-                        {calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue) >= 0 ? '↗' : '↘'}
-                        {Math.abs(calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue)).toFixed(1)}% vs last month
-                    </div>
-                </div>
+                <MetricCard s={formatNumber(analyticsData.revenue)}
+                            number={calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue)}/>
 
-                <div style={{border: '1px solid #ddd', padding: '20px', borderRadius: '8px'}}>
-                    <h3>Page Views</h3>
-                    <div style={{fontSize: '32px', fontWeight: 'bold', color: '#FF9800'}}>
-                        {formatNumber(analyticsData.pageViews)}
-                    </div>
-                    <div
-                        style={{color: calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews) >= 0 ? 'green' : 'red'}}>
-                        {calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews) >= 0 ? '↗' : '↘'}
-                        {Math.abs(calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews)).toFixed(1)}% vs last month
-                    </div>
-                </div>
+                <MetricCard s={formatNumber(analyticsData.pageViews)}
+                            number={calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews)}/>
 
-                <div style={{border: '1px solid #ddd', padding: '20px', borderRadius: '8px'}}>
-                    <h3>Conversion Rate</h3>
-                    <div style={{fontSize: '32px', fontWeight: 'bold', color: '#9C27B0'}}>
-                        {analyticsData.conversionRate.toFixed(2)}%
-                    </div>
-                    <div
-                        style={{color: calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate) >= 0 ? 'green' : 'red'}}>
-                        {calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate) >= 0 ? '↗' : '↘'}
-                        {Math.abs(calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate)).toFixed(1)}% vs
-                        last month
-                    </div>
-                </div>
-            </div>
+                <MetricCard s={formatNumber(analyticsData.conversionRate)}
+                            number={calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate)}/>
+
 
             <div style={{marginTop: '40px'}}>
                 <h2>Recent Activity</h2>
