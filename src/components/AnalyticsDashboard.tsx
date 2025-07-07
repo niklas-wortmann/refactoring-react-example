@@ -15,18 +15,18 @@ type AnalyticsData = {
 };
 const AnalyticsDashboard = () => {
 
-    const [data, setData] = useState<AnalyticsData | null>(null);
+    const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         fetch('/api/analytics')
             .then(response => response.json())
-            .then(result => {
-                setData(result);
+            .then(apiResponse => {
+                setAnalyticsData(apiResponse);
                 setLoading(false);
             })
-            .catch(err => {
+            .catch(apiError => {
                 setError('Failed to load analytics data');
                 setLoading(false);
             });
@@ -54,7 +54,7 @@ const AnalyticsDashboard = () => {
 
     if (loading) return <div>Loading analytics...</div>;
     if (error) return <div style={{color: 'red'}}>{error}</div>;
-    if (!data) return <div>No data available</div>;
+    if (!analyticsData) return <div>No data available</div>;
 
     return (
         <div style={{padding: '20px', fontFamily: 'Arial, sans-serif'}}>
@@ -69,47 +69,47 @@ const AnalyticsDashboard = () => {
                 <div style={{border: '1px solid #ddd', padding: '20px', borderRadius: '8px'}}>
                     <h3>Total Users</h3>
                     <div style={{fontSize: '32px', fontWeight: 'bold', color: '#2196F3'}}>
-                        {formatNumber(data.totalUsers)}
+                        {formatNumber(analyticsData.totalUsers)}
                     </div>
                     <div
-                        style={{color: calculateGrowth(data.totalUsers, data.previousTotalUsers) >= 0 ? 'green' : 'red'}}>
-                        {calculateGrowth(data.totalUsers, data.previousTotalUsers) >= 0 ? '↗' : '↘'}
-                        {Math.abs(calculateGrowth(data.totalUsers, data.previousTotalUsers)).toFixed(1)}% vs last month
+                        style={{color: calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers) >= 0 ? 'green' : 'red'}}>
+                        {calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers) >= 0 ? '↗' : '↘'}
+                        {Math.abs(calculateGrowth(analyticsData.totalUsers, analyticsData.previousTotalUsers)).toFixed(1)}% vs last month
                     </div>
                 </div>
 
                 <div style={{border: '1px solid #ddd', padding: '20px', borderRadius: '8px'}}>
                     <h3>Revenue</h3>
                     <div style={{fontSize: '32px', fontWeight: 'bold', color: '#4CAF50'}}>
-                        ${formatNumber(data.revenue)}
+                        ${formatNumber(analyticsData.revenue)}
                     </div>
-                    <div style={{color: calculateGrowth(data.revenue, data.previousRevenue) >= 0 ? 'green' : 'red'}}>
-                        {calculateGrowth(data.revenue, data.previousRevenue) >= 0 ? '↗' : '↘'}
-                        {Math.abs(calculateGrowth(data.revenue, data.previousRevenue)).toFixed(1)}% vs last month
+                    <div style={{color: calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue) >= 0 ? 'green' : 'red'}}>
+                        {calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue) >= 0 ? '↗' : '↘'}
+                        {Math.abs(calculateGrowth(analyticsData.revenue, analyticsData.previousRevenue)).toFixed(1)}% vs last month
                     </div>
                 </div>
 
                 <div style={{border: '1px solid #ddd', padding: '20px', borderRadius: '8px'}}>
                     <h3>Page Views</h3>
                     <div style={{fontSize: '32px', fontWeight: 'bold', color: '#FF9800'}}>
-                        {formatNumber(data.pageViews)}
+                        {formatNumber(analyticsData.pageViews)}
                     </div>
                     <div
-                        style={{color: calculateGrowth(data.pageViews, data.previousPageViews) >= 0 ? 'green' : 'red'}}>
-                        {calculateGrowth(data.pageViews, data.previousPageViews) >= 0 ? '↗' : '↘'}
-                        {Math.abs(calculateGrowth(data.pageViews, data.previousPageViews)).toFixed(1)}% vs last month
+                        style={{color: calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews) >= 0 ? 'green' : 'red'}}>
+                        {calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews) >= 0 ? '↗' : '↘'}
+                        {Math.abs(calculateGrowth(analyticsData.pageViews, analyticsData.previousPageViews)).toFixed(1)}% vs last month
                     </div>
                 </div>
 
                 <div style={{border: '1px solid #ddd', padding: '20px', borderRadius: '8px'}}>
                     <h3>Conversion Rate</h3>
                     <div style={{fontSize: '32px', fontWeight: 'bold', color: '#9C27B0'}}>
-                        {data.conversionRate.toFixed(2)}%
+                        {analyticsData.conversionRate.toFixed(2)}%
                     </div>
                     <div
-                        style={{color: calculateGrowth(data.conversionRate, data.previousConversionRate) >= 0 ? 'green' : 'red'}}>
-                        {calculateGrowth(data.conversionRate, data.previousConversionRate) >= 0 ? '↗' : '↘'}
-                        {Math.abs(calculateGrowth(data.conversionRate, data.previousConversionRate)).toFixed(1)}% vs
+                        style={{color: calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate) >= 0 ? 'green' : 'red'}}>
+                        {calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate) >= 0 ? '↗' : '↘'}
+                        {Math.abs(calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate)).toFixed(1)}% vs
                         last month
                     </div>
                 </div>
@@ -118,10 +118,10 @@ const AnalyticsDashboard = () => {
             <div style={{marginTop: '40px'}}>
                 <h2>Recent Activity</h2>
                 <div style={{border: '1px solid #ddd', borderRadius: '8px', overflow: 'hidden'}}>
-                    {data.recentActivity && data.recentActivity.map((activity: any, index: number) => (
+                    {analyticsData.recentActivity && analyticsData.recentActivity.map((activity: any, index: number) => (
                         <div key={index} style={{
                             padding: '15px',
-                            borderBottom: index < data.recentActivity.length - 1 ? '1px solid #eee' : 'none',
+                            borderBottom: index < analyticsData.recentActivity.length - 1 ? '1px solid #eee' : 'none',
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center'
