@@ -1,18 +1,21 @@
 import { useEffect, useState} from 'react';
 
+type RecentActivity = { user: string, action: string, timestamp: string };
+
+type AnalyticsData = {
+    "totalUsers": number,
+    "previousTotalUsers": number,
+    "revenue": number,
+    "previousRevenue": number,
+    "pageViews": number,
+    "previousPageViews": number,
+    "conversionRate": number,
+    "previousConversionRate": number,
+    "recentActivity": RecentActivity[]
+};
 const AnalyticsDashboard = () => {
 
-    const [data, setData] = useState<{
-        "totalUsers": number,
-        "previousTotalUsers": number,
-        "revenue": number,
-        "previousRevenue": number,
-        "pageViews": number,
-        "previousPageViews": number,
-        "conversionRate": number,
-        "previousConversionRate": number,
-        "recentActivity": {user: string, action: string, timestamp: string}[]
-    } | null>(null);
+    const [data, setData] = useState<AnalyticsData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
