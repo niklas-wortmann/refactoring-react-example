@@ -79,7 +79,7 @@ const AnalyticsDashboard = () => {
 
                 <MetricCard s={formatNumber(analyticsData.conversionRate)}
                             number={calculateGrowth(analyticsData.conversionRate, analyticsData.previousConversionRate)}/>
-
+            </div>
 
             <div style={{marginTop: '40px'}}>
                 <h2>Recent Activity</h2>
